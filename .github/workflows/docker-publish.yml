@@ -50,6 +50,9 @@ jobs:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
           flavor: |
             latest=true
+      
+      "${{ REPOSITORY_NAME }}-server"
+      
       # Build and push Docker image with Buildx (don't push on PR)
       # https://github.com/docker/build-push-action
       - name: Build and push Docker image
@@ -59,5 +62,5 @@ jobs:
           push: ${{ github.event_name != 'pull_request' }}
           tags: |
             ${{ steps.meta.outputs.tags }}
-            "ghcr.io/nyxtend/dogecoin-container:$GITHUB_SHA"
+            "ghcr.io/nyxtend/dogecoin-container:${{ GITHUB_SHA }}"
           labels: ${{ steps.meta.outputs.labels }}
