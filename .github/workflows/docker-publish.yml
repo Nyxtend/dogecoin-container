@@ -71,6 +71,8 @@ jobs:
               --data @- <<'EOF'
               {
                   "event_type": "build_application",
-                  "new_container": "ghcr.io/nyxtend/dogecoin-container:${{ github.sha }}"
+                  "client_payload": {
+                    "new_container": "ghcr.io/nyxtend/dogecoin-container:${{ github.sha }}"
+                  }
               }
               EOF
