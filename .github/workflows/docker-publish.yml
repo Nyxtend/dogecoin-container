@@ -67,4 +67,10 @@ jobs:
             -u "${{ secrets.PAT_USERNAME}}:${{secrets.PAT_TOKEN}}" \
             -H "Accept: application/vnd.github.everest-preview+json" \
             -H "Content-Type: application/json" \
-            https://api.github.com/repos/Nyxtend/dogecoin-kubernetes-config/dispatches --data '{"event_type": "build_application"}'
+            https://api.github.com/repos/Nyxtend/dogecoin-kubernetes-config/dispatches \
+              --data @- <<'EOF'
+              {
+                  "event_type": "build_application",
+                  "new_container": "ghcr.io/nyxtend/dogecoin-container:${{ github.sha }}"
+              }
+              EOF
