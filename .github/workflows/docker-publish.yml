@@ -63,9 +63,21 @@ jobs:
       
       - name: Update Kubernetes configs
         run: |
+          LOWERCASE_REPO=$(echo "${{ github.repository }}" | tr '[:upper:]' '[:lower:]')
           curl -XPOST \
             -u "${{ secrets.PAT_USERNAME}}:${{secrets.PAT_TOKEN}}" \
             -H "Accept: application/vnd.github.everest-preview+json" \
             -H "Content-Type: application/json" \
-            https://api.github.com/repos/Nyxtend/dogecoin-kubernetes-config/dispatches \
-              --data '{"event_type": "build_application","client_payload": {"new_container": "ghcr.io/nyxtend/dogecoin-container:${{ github.sha }}" }}'
+            https://api.github.com/repos/Nyxtend/github-actions-dispatches-router/dispatches \
+              --data @- <<-ENDOFDOC
+              {
+                "event_type": "build_application",
+                "client_payload": {
+                  "dispatches_topics": ["update_k8s_config"],
+                  "body": {
+                    "repo": "${{ github.repository }}",
+                    "new_container": "ghcr.io/${LOWERCASE_REPO}:${{ github.sha }}"
+                  }
+                }
+              }
+          ENDOFDOC
