@@ -6,8 +6,6 @@ name: Build Docker Image
 # documentation.
 
 on:
-  schedule:
-    - cron: '28 20 * * 1'
   push:
     branches: [ main ]
   workflow_dispatch:
