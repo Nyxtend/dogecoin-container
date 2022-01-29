@@ -59,7 +59,7 @@ jobs:
             "ghcr.io/nyxtend/dogecoin-container:${{ github.sha }}"
           labels: ${{ steps.meta.outputs.labels }}
       
-      - name: Update Kubernetes configs
+      - name: Send update to dispatches router
         run: |
           LOWERCASE_REPO=$(echo "${{ github.repository }}" | tr '[:upper:]' '[:lower:]')
           curl -XPOST \
